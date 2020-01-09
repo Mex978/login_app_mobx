@@ -14,11 +14,15 @@ abstract class _LoginControllerBase with Store {
   String password;
 
   String validateEmail() {
+    RegExp regExp = RegExp(
+        r"(^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-z]+(\.[a-z]+)?$)",
+        multiLine: false);
+
     if (email == null)
       return null;
     else if (email.isEmpty)
       return "Esse campo é obrigatório.";
-    else if (email.contains("@") && email.length >= 11 && email.contains("."))
+    else if (regExp.hasMatch(email))
       return null;
     else
       return "E-mail inválido.";
@@ -29,7 +33,7 @@ abstract class _LoginControllerBase with Store {
       return null;
     else if (password.isEmpty)
       return "Esse campo é obrigatório.";
-    else if (password.length > 8)
+    else if (password.length >= 8)
       return null;
     else
       return "A senha deve possuir pelo menos 8 caracteres.";
